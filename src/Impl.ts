@@ -279,7 +279,11 @@ export class Impl {
     });
   }
 
-  async setParameter(name: string, value: ParameterValue) {
+  async setParameter(
+    name: string,
+    value: ParameterValue,
+    type?: 'byte_array' | 'float64' | 'float64_array',
+  ) {
     await this.#connecting;
     const paramId = (this.#paramId++).toString();
     return new Promise<Parameter>((resolve) => {
@@ -290,7 +294,7 @@ export class Impl {
         }
       };
       this.#client.on('parameterValues', listener);
-      this.#client.setParameters([{ name: name, value }], paramId);
+      this.#client.setParameters([{ name: name, value, type }], paramId);
     });
   }
 

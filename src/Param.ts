@@ -14,7 +14,11 @@ export class Param {
     this.#ros.rosImpl?.getParameter(this.#name).then(callback);
   }
 
-  set(value: ParameterValue, callback: (value: Parameter) => void) {
-    this.#ros.rosImpl?.setParameter(this.#name, value).then(callback);
+  set(
+    value: ParameterValue,
+    callback: (value: Parameter) => void,
+    type?: 'byte_array' | 'float64' | 'float64_array',
+  ) {
+    this.#ros.rosImpl?.setParameter(this.#name, value, type).then(callback);
   }
 }
