@@ -1,1 +1,1 @@
-{"root":["../src/Impl.ts","../src/Param.ts","../src/Ros.ts","../src/Service.ts","../src/Topic.ts","../src/index.ts"],"errors":true,"version":"6.0.2"}
+{"root":["../src/Impl.ts","../src/Param.ts","../src/Ros.ts","../src/Service.ts","../src/Topic.ts","../src/index.ts"],"version":"5.9.3"}

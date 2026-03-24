@@ -263,13 +263,25 @@ class Impl {
     #getMessageReader(channelOrService) {
         const name = 'schemaName' in channelOrService
             ? channelOrService.schemaName
-            : channelOrService.type;
+            : 'response' in channelOrService
+                ? channelOrService.response?.schemaName
+                : undefined;
         const schemaEncoding = 'schemaEncoding' in channelOrService
             ? channelOrService.schemaEncoding
-            : undefined;
+            : 'response' in channelOrService
+                ? channelOrService.response?.schemaEncoding
+                : undefined;
         const schema = 'schema' in channelOrService
             ? channelOrService.schema
-            : channelOrService.responseSchema;
+            : 'response' in channelOrService
+                ? channelOrService.response?.schema
+                : 'responseSchema' in channelOrService
+                    ? channelOrService.responseSchema
+                    : undefined;
+        if (name === undefined)
+            throw new Error('Name can not be undefined');
+        if (schema === undefined)
+            throw new Error('schema can not be undefined');
         return (this.#messageReaders.get(name) ??
             (() => {
                 const reader = this.#isRos1
@@ -287,10 +299,20 @@ class Impl {
             : channelOrService.type;
         const schemaEncoding = 'schemaEncoding' in channelOrService
             ? channelOrService.schemaEncoding
-            : undefined;
+            : 'request' in channelOrService
+                ? channelOrService.request?.schemaEncoding
+                : undefined;
         const schema = 'schema' in channelOrService
             ? channelOrService.schema
-            : channelOrService.requestSchema;
+            : 'request' in channelOrService
+                ? channelOrService.request?.schema
+                : 'requestSchema' in channelOrService
+                    ? channelOrService.requestSchema
+                    : undefined;
+        if (name === undefined)
+            throw new Error('Name can not be undefined');
+        if (schema === undefined)
+            throw new Error('Schema can not be undefined');
         return (this.#messageWriters.get(name) ??
             (() => {
                 const writer = this.#isRos1
